@@ -21,8 +21,8 @@ if (isset($_POST['submit'])) {
 		$sql = "SELECT * FROM CUSTOMER WHERE CusEmailAddress ='$CusEmailAddress'";
 		$result = mysqli_query($conn, $sql);
 		if (!$result->num_rows > 0) {
-			$sql = "INSERT INTO CUSTOMER (CusFirstName, CusLastName, CusEmailAddress, CusEncryptedPass)
-					VALUES ('$CusFirstName', '$CusLastName', '$CusEmailAddress', '$password')";
+			$sql = "INSERT INTO CUSTOMER (CusFirstName, CusLastName, CusEmailAddress, CusEncryptedPass, Admin)
+					VALUES ('$CusFirstName', '$CusLastName', '$CusEmailAddress', '$password', 0)";
 			$result = mysqli_query($conn, $sql);
 			if ($result) {
 				echo "<script>alert('Wow! User Registration Completed.')</script>";
@@ -31,6 +31,7 @@ if (isset($_POST['submit'])) {
 				$CusEmailAddress  = "";
 				$_POST['password'] = "";
 				$_POST['cpassword'] = "";
+				header("Location: /DataBase_Project/login/index.php");
 			} else {
 				//echo $result;
 				echo "<script>alert('Woops! Something Wrong Went.')</script>";

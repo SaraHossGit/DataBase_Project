@@ -7,7 +7,7 @@
         $sql = "SELECT * FROM {$table}";
         $result = $conn->query($sql);
 
-        $resultArray = array();
+        $resultArray = array(); 
 
         if ($result->num_rows > 0) {
             // output data of each row
