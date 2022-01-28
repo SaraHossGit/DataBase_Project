@@ -1,3 +1,11 @@
+<?php
+
+    
+    if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -199,7 +207,8 @@
                     <tbody class="align-middle">
                     <?php 
                         $subtotal=0;
-                        $cartItem = getSubData('cart', 'CusID', 1);
+                        $CusID = $_SESSION['CusID'];
+                        $cartItem = getSubData('cart', 'CusID', $CusID);
                         foreach ($cartItem as $item1){
                         $id = $item1['ProdID'];
                         $Quantity=$item1['Quantity'];
@@ -228,8 +237,9 @@
                             <td class="align-middle">
                                 <?php
                                     if(isset($_POST['cart'])) {
-                                        removeFromCart(1, $id);
-                                        //update subtotal
+                                        $CusID = $_SESSION['CusID'];
+                                        removeFromCart($CusID, $id);
+                                        //header("refresh: 3");
                                     }
                                 ?>
                                 <form method="post">

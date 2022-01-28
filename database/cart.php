@@ -1,7 +1,14 @@
 <?php
 
-    function addToCart($CusID = 1, $ProdID, $Quantity=1){
+    
+    if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
+
+    function addToCart($CusID = 1 , $ProdID, $Quantity=1){
         // require MySQL Connection
+        $CusID = $_SESSION['CusID'];
         require ('connection.php');
                 
         $query = "
@@ -16,10 +23,11 @@
 
     function removeFromCart($CusID = 1, $ProdID){
         // require MySQL Connection
+        //$CusID = $_SESSION['CusID'];
         require ('connection.php');
                 
-        $query = " DELETE FROM cart WHERE CusID={$CusID} AND ProdID={$ProdID};";
-
+        $query = "DELETE FROM cart WHERE CusID={$CusID} AND ProdID={$ProdID};";
         mysqli_query($conn, $query);
         die;
     }
+?>

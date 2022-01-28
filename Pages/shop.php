@@ -1,3 +1,11 @@
+<?php
+
+    
+    if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
+?>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -316,7 +324,8 @@
 
                                                 <?php
                                                     if(isset($_POST['cart'])) {
-                                                        addToCart(1, $id, 1);
+                                                        $CusID = $_SESSION['CusID'];
+                                                        addToCart($CusID, $id, 1);
                                                     }
                                                 ?>
                                                 
