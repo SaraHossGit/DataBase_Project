@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php 
+    session_start();
+?>
+
 <head>
     <meta charset="utf-8">
     <title>EShopper - Bootstrap Shop Template</title>
@@ -22,12 +26,12 @@
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
     <?php
         // require functions.php file
         require ('functions.php');
-        $product_shuffle = $product->getData('categories');
+        $product_shuffle = getData('categories');
     ?>
 
 </head>
@@ -72,23 +76,25 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form action="">
+
+                <form action="Pages/SearchPage.php" method="get">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
+                        <input input type="text" name="search" class="form-control" placeholder="Search for products">
                         <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
+                            <span>
+                                <button href="Pages/SearchPage.php" class="btn btn-primary px-4" type="submit" style="height: 38px"><i class="fa fa-search"></i></button>
+                                
                             </span>
                         </div>
                     </div>
-                </form>
+               </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
+                <a href="Pages/favouritesPage.php" class="btn border">
                     <i class="fas fa-heart text-primary"></i>
                     <span class="badge">0</span>
                 </a>
-                <a href="" class="btn border">
+                <a href="Pages/cartPage.php" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <span class="badge">0</span>
                 </a>
@@ -111,17 +117,25 @@
                     <div class="navbar-nav w-100"  style="height: 450px">
 
                         <div class="navbar-nav w-100" >
-                            <?php foreach ($product_shuffle as $item) { ?>
+                            <?php foreach ($product_shuffle as $item) { 
+                                $subcat=getSubData('sub_categories', 'CatID', $item['CatID']);?>
                                 <!-- html code -->
                                 <div class="nav-item dropdown">
-                                    <a href="Pages/shop.php" class="nav-link" data-toggle="dropdown"><?php echo $item['CatName']?> <i class="fa fa-angle-down float-right mt-1"></i></a>
-                                    <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0" style="height: 50px; overflow-y: scroll;">
+                                    <a href="Pages/shop.php" class="nav-link" data-toggle="dropdown"> <?php echo $item['CatName']?> 
+                                        <?php if ($subcat!=null) { ?> 
+                                            <i class="fa fa-angle-down float-right mt-1"></i> 
+                                        <?php } ?> 
+                                    </a>
+                                    
+                                    <?php if ($subcat!=null) { ?>
+                                        <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0" style="height: 50px; overflow-y: scroll;">
+                                            <?php foreach ($subcat as $item2) { ?>
+                                                <!-- html code -->
+                                                    <a href="Pages/shop.php" class="dropdown-item"> <?php echo $item2['SubCatName']?> </a>
+                                            <?php } // closing foreach function ?>
+                                        </div> 
+                                    <?php } // closing if statement ?>
 
-                                        <?php foreach ($product->getSubData('sub_categories', 'CatID', $item['CatID']) as $item2) { ?>
-                                            <!-- html code -->
-                                            <a href="Pages/shop.php" class="dropdown-item"> <?php echo $item2['SubCatName']?> </a>
-                                        <?php } // closing foreach function ?>
-                                    </div> 
                                 </div>
                             <?php } // closing foreach function ?>
                         </div>
@@ -145,16 +159,31 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="Pages/cart.php" class="dropdown-item">Shopping Cart</a>
+                                    <a href="Pages/cartPage.php" class="dropdown-item">Shopping Cart</a>
                                     <a href="Pages/checkout.php" class="dropdown-item">Checkout</a>
                                 </div>
                             </div>
                             <a href="Pages/contact.php" class="nav-item nav-link">Contact</a>
                         </div>
-                        <div class="navbar-nav ml-auto py-0">
-                            <a href="" class="nav-item nav-link">Login</a>
-                            <a href="" class="nav-item nav-link">Register</a>
-                        </div>
+                        <?php 
+                        if (isset($_SESSION['CusID'])) {
+                            ?>
+                            <div class="navbar-nav ml-auto py-0">
+                                <a href="ForAdmin.php" class="nav-item nav-link"> <?php echo "Welcome, "  . $_SESSION['First_name']; ?></a>
+                                <a href="login/logout.php" class="nav-item nav-link">logout</a>
+                            </div>
+                            <?php
+
+                        }
+                        else{
+                            ?>
+                            <div class="navbar-nav ml-auto py-0">
+                                <a href="login/index.php" class="nav-item nav-link">Login</a>
+                                <a href="login/register.php" class="nav-item nav-link">Register</a>
+                            </div>
+                            <?php
+                        }
+                        ?>
                     </div>
                 </nav>
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
@@ -165,7 +194,7 @@
                                 <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
                                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">All Your Essentials</h3>
-                                    <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
+                                    <a href="Pages/shop.php" class="btn btn-light py-2 px-3">Shop Now</a>
                                 </div>
                             </div>
                         </div>
@@ -175,7 +204,7 @@
                                 <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
                                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
-                                    <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
+                                    <a href="Pages/shop.php" class="btn btn-light py-2 px-3">Shop Now</a>
                                 </div>
                             </div>
                         </div>
@@ -386,7 +415,7 @@
                         <div class="d-flex justify-content-center">
                             <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
                         </div>
-                    </div>
+                    </div> 
                     <div class="card-footer d-flex justify-content-between bg-light border">
                         <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
                         <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>

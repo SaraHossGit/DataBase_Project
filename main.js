@@ -3,6 +3,7 @@
     
     // Dropdown on mouse hover
     $(document).ready(function () {
+
         function toggleNavbarMethod() {
             if ($(window).width() > 992) {
                 $('.navbar .dropdown').on('mouseover', function () {
@@ -99,6 +100,7 @@
         }
         button.parent().parent().find('input').val(newVal);
     });
+    
 
     // Isotope Filter
     // templating
