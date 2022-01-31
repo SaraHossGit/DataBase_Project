@@ -6,9 +6,8 @@
         session_start(); 
     } 
 
-    function addToCart($CusID = 1 , $ProdID, $Quantity=1){
+    function addToCart($CusID , $ProdID, $Quantity=1){
         // require MySQL Connection
-        $CusID = $_SESSION['CusID'];
         require ('connection.php');
                 
         $query = "
@@ -28,6 +27,7 @@
                 
         $query = "DELETE FROM cart WHERE CusID={$CusID} AND ProdID={$ProdID};";
         mysqli_query($conn, $query);
+        echo "Removed from cart Successfully";
         die;
     }
 ?>
