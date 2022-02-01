@@ -16,7 +16,7 @@
                         <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
                         <div class="d-flex flex-column justify-content-start">
                             <a class="text-dark mb-2" href="../index.php"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                            <a class="text-dark mb-2" href="../Pages/shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                            <a class="text-dark mb-2" href="../Pages/shop.php"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
                             <a class="text-dark mb-2" href="../Pages/returnProduct.php"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
                             <a class="text-dark mb-2" href="../Pages/cartPage.php"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
                             <a class="text-dark mb-2" href="../Pages/checkout.php"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
