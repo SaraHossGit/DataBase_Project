@@ -1,19 +1,31 @@
 <?php include ("../header.php"); ?>
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">SEARCH</h1>
+            <div class="d-inline-flex">
+                <p class="m-0"><a href="../index.php">Home</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0">Search</p>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
 
     <!-- Search Start -->
-    <div class="col-md-12">
-        <div class="card mt-4">
-            <div class="card-body">
-                <table class="table table-bordered">
-                    <thead>
+    
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5">
+                <table class="table table-bordered text-center mb-0">
+                    <thead class="bg-secondary text-dark">
                         <tr>
-                            <th>ProdName</th>
-                            <th>ProdImage</th>
-                            <th>ProdTechSpecs</th>
-                            <th>ProdPrice</th>
+                            <th>Name</th>
+                            <th>Image</th>
+                            <th>Technical Specs</th>
+                            <th>Price</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="align-middle">
                         <?php 
                             $searchData=getSearchData();
                             if(mysqli_num_rows($searchData) > 0)

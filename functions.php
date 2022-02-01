@@ -12,4 +12,6 @@ require ('database/cart.php');
 
 require ('database/favourite.php');
 
-// print_r( getSubData('product', 'ProdID', 1));
+require ('database/returnProd.php');
+
+// returnProduct ( 1 , 'Samsung Galaxy 10' , 1 ) ;

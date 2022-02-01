@@ -32,6 +32,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/customStyle.css" rel="stylesheet">
 
     <?php
         include ('../functions.php');
@@ -178,15 +179,15 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="../index.php" class="nav-item nav-link">Home</a>
-                            <a href="shop.html" class="nav-item nav-link active">Shop</a>
-                            <!-- <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
-                            <div class="nav-item dropdown">
+                            <a href="shop.html" class="nav-item nav-link">Shop</a>
+                            <a href="Pages/returnProduct.php" class="nav-item nav-link">Return Product</a>
+                            <!-- <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a href="cart.html" class="dropdown-item">Shopping Cart</a>
                                     <a href="checkout.html" class="dropdown-item">Checkout</a>
                                 </div>
-                            </div> -->
+                            </div>  -->
                             <a href="contact.php" class="nav-item nav-link">Contact</a>
                         </div>
                         <?php 
@@ -214,17 +215,3 @@
         </div>
     </div>
     <!-- Navbar End -->
-
-
-    <!-- Page Header Start -->
-    <div class="container-fluid bg-secondary mb-5">
-        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-            <h1 class="font-weight-semi-bold text-uppercase mb-3">Our Shop</h1>
-            <div class="d-inline-flex">
-                <p class="m-0"><a href="../index.php">Home</a></p>
-                <p class="m-0 px-2">-</p>
-                <p class="m-0">Shop</p>
-            </div>
-        </div>
-    </div>
-    <!-- Page Header End -->

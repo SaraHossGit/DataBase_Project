@@ -172,8 +172,8 @@
                         <div class="navbar-nav mr-auto py-0">
                             <a href="index.php" class="nav-item nav-link active">Home</a>
                             <a href="Pages/shop.php" class="nav-item nav-link">Shop</a>
-                            <!-- <a href="Pages/detail.php" class="nav-item nav-link">Shop Detail</a>
-                            <div class="nav-item dropdown">
+                            <a href="Pages/returnProduct.php" class="nav-item nav-link">Return Product</a>
+                            <!-- <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a href="Pages/cartPage.php" class="dropdown-item">Shopping Cart</a>

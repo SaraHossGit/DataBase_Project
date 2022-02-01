@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
 		$sql = "SELECT * FROM CUSTOMER WHERE CusEmailAddress ='$CusEmailAddress'";
 		$result = mysqli_query($conn, $sql);
 		if (!$result->num_rows > 0) {
-			$sql = "INSERT INTO CUSTOMER (CusFirstName, CusLastName, CusEmailAddress, CusEncryptedPass, Admin)
+			$sql = "INSERT INTO CUSTOMER (CusFirstName, CusLastName, CusEmailAddress, CusEncryptedPass, CusRole)
 					VALUES ('$CusFirstName', '$CusLastName', '$CusEmailAddress', '$password', 0)";
 			$result = mysqli_query($conn, $sql);
 			if ($result) {
