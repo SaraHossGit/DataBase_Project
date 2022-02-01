@@ -186,7 +186,7 @@
                         if (isset($_SESSION['CusID'])) {
                             ?>
                             <div class="navbar-nav ml-auto py-0">
-                                <a href="ForAdmin.php" class="nav-item nav-link"> <?php echo "Welcome, "  . $_SESSION['First_name']; ?></a>
+                                <a href="AdminPages/adminIndex.php" class="nav-item nav-link"> <?php echo "Welcome, "  . $_SESSION['First_name']; ?></a>
                                 <a href="login/logout.php" class="nav-item nav-link">logout</a>
                             </div>
                             <?php

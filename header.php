@@ -86,7 +86,7 @@
             </div>
             <div class="col-lg-6 col-6 text-left">
 
-                <form action="SearchPage.php" method="get">
+                <form action="../Pages/SearchPage.php" method="get">
                     <div class="input-group">
                         <input input type="text" name="search" class="form-control" placeholder="Search for products">
                         <div class="input-group-append">
@@ -99,7 +99,7 @@
                </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
-            <a href="favouritesPage.php" class="btn border">
+            <a href="../Pages/favouritesPage.php" class="btn border">
                     <i class="fas fa-heart text-primary"></i>
                     <span class="badge">
                         <?php
@@ -112,7 +112,7 @@
                         ?>
                     </span>
                 </a>
-                <a href="cartPage.php" class="btn border">
+                <a href="../Pages/cartPage.php" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <span class="badge">
                         <?php
@@ -179,8 +179,8 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="../index.php" class="nav-item nav-link">Home</a>
-                            <a href="shop.html" class="nav-item nav-link">Shop</a>
-                            <a href="Pages/returnProduct.php" class="nav-item nav-link">Return Product</a>
+                            <a href="../Pages/shop.php" class="nav-item nav-link">Shop</a>
+                            <a href="../Pages/returnProduct.php" class="nav-item nav-link">Return Product</a>
                             <!-- <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu rounded-0 m-0">
@@ -188,7 +188,7 @@
                                     <a href="checkout.html" class="dropdown-item">Checkout</a>
                                 </div>
                             </div>  -->
-                            <a href="contact.php" class="nav-item nav-link">Contact</a>
+                            <a href="../Pages/contact.php" class="nav-item nav-link">Contact</a>
                         </div>
                         <?php 
                         if (isset($_SESSION['CusID'])) {
