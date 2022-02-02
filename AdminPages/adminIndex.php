@@ -48,7 +48,7 @@ else{
                             <td> Update quanitity of new/ referbished products in inventory</td>
                         </tr>
                         <tr>
-                            <td> <a href="" class= "nav-link text-center" > Manage Admins </a> </td>
+                            <td> <a href="UpdateRoles.php" class= "nav-link text-center" > Manage Admins </a> </td>
                             <td> Add, Remove, or Update Admins info</td>
                         </tr>
                         <tr>

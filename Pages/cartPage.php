@@ -1,3 +1,7 @@
+<?php
+    ob_start();
+    session_start();
+?>
 <?php include ("../header.php"); ?>
         <!-- Page Header Start -->
         <div class="container-fluid bg-secondary mb-5">
@@ -53,7 +57,8 @@
                                     if(isset($_POST['cart'])) {
                                         $CusID = $_SESSION['CusID'];
                                         removeFromCart($CusID, $id);
-                                        //header("refresh: 3");
+                                        unset($_POST['cart']);
+                                        header("refresh: 0");
                                     }
                                 ?>
                                 <form method="post">

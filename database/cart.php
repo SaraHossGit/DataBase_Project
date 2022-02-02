@@ -17,17 +17,17 @@
 
         mysqli_query($conn, $query);
         echo "Added to cart Successfully";
-        die;
+        
     }
 
     function removeFromCart($CusID = 1, $ProdID){
         // require MySQL Connection
-        //$CusID = $_SESSION['CusID'];
+        $CusID = $_SESSION['CusID'];
         require ('connection.php');
                 
         $query = "DELETE FROM cart WHERE CusID={$CusID} AND ProdID={$ProdID};";
         mysqli_query($conn, $query);
         echo "Removed from cart Successfully";
-        die;
+        
     }
 ?>
