@@ -148,7 +148,7 @@
                                         <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0" style="height: 50px; overflow-y: scroll;">
                                             <?php foreach ($subcat as $item2) { ?>
                                                 <!-- html code -->
-                                                    <a href="Pages/shop.php" class="dropdown-item"> <?php echo $item2['SubCatName']?> </a>
+                                                <a href="Pages/shop.php?SubCatID=<?php echo $item2['SubCatID'] ?>" class="dropdown-item"> <?php echo $item2['SubCatName']?> </a>
                                             <?php } // closing foreach function ?>
                                         </div> 
                                     <?php } // closing if statement ?>

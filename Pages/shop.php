@@ -110,8 +110,11 @@
                         </div>
                     </div>
 
-                    <?php foreach ($product_shuffle as $item) {  $id=$item['ProdID']; ?>
-                    
+                    <?php 
+                    $a =  $_GET['SubCatID'];
+                    $product_shuffle = getSubData('product', 'SubCatID', $a);
+                    foreach ($product_shuffle as $item) {  
+                        $id=$item['ProdID']; ?>
                                 <!-- html code -->
                                 <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
                                         <div class="card product-item border-0 mb-4 " style="height:500px;">
