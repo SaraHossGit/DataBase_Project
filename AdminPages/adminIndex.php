@@ -3,9 +3,11 @@
 session_start();
 
 if (isset($_SESSION['CusRole']) && $_SESSION['CusRole'] == 0) {
-    header("Location: ../index.php");
-}
+    header("Location: /DataBase_Project/index.php");
 
+    // print_r("here");
+}
+else{
 ?>
 <?php include ("../header.php"); ?>
     <!-- Page Header Start -->
@@ -70,4 +72,4 @@ if (isset($_SESSION['CusRole']) && $_SESSION['CusRole'] == 0) {
     </div>
     <!-- Search End -->
     
-<?php include ("../footer.php"); ?>
+<?php include ("../footer.php"); } ?>
