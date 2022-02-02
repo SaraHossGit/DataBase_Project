@@ -54,6 +54,7 @@ function update_role_number($CusID, $NewRole){
                             <td class="align-middle">
                                 <?php 
                                 $array = [
+                                    "0" => "User",
                                     "1" => "Manager",
                                     "2" => "Admin",
                                     "3" => "Call Center Representitive",
@@ -74,6 +75,7 @@ function update_role_number($CusID, $NewRole){
                                     <div class="nav-item dropdown">
                                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><?php echo $array[$item['CusRole']] ?></a>
                                         <div class="dropdown-menu rounded-0 m-0">
+                                        <button type="submit" name="Manger" value="0" class="dropdown-item">User</button>
                                         <button type="submit" name="Manger" value="1" class="dropdown-item">Manager</button>
                                         <button type="submit" name="Manger" value="2" class="dropdown-item">Admin</button>
                                         <button type="submit" name="Manger" value="3" class="dropdown-item">Call Center Representitive</button>
