@@ -1,4 +1,18 @@
 <?php include ("../header.php"); ?>
+    <?php
+    $id = $_GET['id'];
+    
+    if(isset($_POST['data'])) {
+        $result = $_POST['data'];
+        $message=addToCart($CusID, $id, $result);
+        $text = print_r($message, true);
+        echo "<br>
+        <div class=\"alert\">
+            <span class=\"closebtn\" onclick=\"this.parentElement.style.display='none';\">&times;</span>
+            <p class=\"text-center font-weight-semi-bold\" style=\"font-size:20px\">" .json_encode($text). "</p>
+        </div>";
+    }
+    ?>
     <!-- Page Header Start -->
     <div class="container-fluid bg-secondary mb-5">
             <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
@@ -13,9 +27,7 @@
     <!-- Page Header End -->
 
     <!-- Shop Detail Start -->
-    <?php 
-		//something was posted
-        $id = $_GET['id'];
+    <?php
         $product = getSubData('product', 'ProdID', $id);
         foreach ($product as $item) { ?>
         <div class="container-fluid py-5">
@@ -72,14 +84,6 @@
                         </form>
                     </div>
                     <div class="d-flex align-items-center mb-4 pt-2">
-                        
-                        <?php
-                            if(isset($_POST['data'])) {
-                                $result = $_POST['data'];
-                                addToCart($CusID, $id, $result);
-                            }
-                        ?>
-                        
                         <form method="post">
                             <input type="text" name="data" class="border-0 bg-secondary text-center" placeholder="Enter Quantity" style= "height:45px; width:200px;">
                             <button type="submit" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>                                                                

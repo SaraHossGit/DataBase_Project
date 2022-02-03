@@ -10,13 +10,11 @@
         // require MySQL Connection
         require ('connection.php');
                 
-        $query = "
-            INSERT INTO cart (CusID, ProdID, Quantity) values ({$CusID}, {$ProdID}, {$Quantity})
-            ON DUPLICATE KEY UPDATE CusID={$CusID} , ProdID={$ProdID} , Quantity = {$Quantity};                
-        ";
+        $query = " SELECT AddToCart ( $CusID, $ProdID , $Quantity ) ; ";
 
-        mysqli_query($conn, $query);
-        echo "Added to cart Successfully";
+        $result=mysqli_query($conn, $query);
+        $row = mysqli_fetch_row($result);
+        return $row[0];
         
     }
 
