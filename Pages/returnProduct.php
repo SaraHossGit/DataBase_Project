@@ -2,7 +2,7 @@
 
 <?php
 if(isset($_POST['invNum']) && isset($_POST['prodName']) && isset($_POST['quantity'])) {
-    $message=returnProduct($_POST['invNum'], $_POST['prodName'], $_POST['quantity']);
+    $message=returnProduct($CusID, $_POST['invNum'], $_POST['prodName'], $_POST['quantity']);
     $text = print_r($message, true);
     // echo "<script type='text/javascript'> alert(".json_encode($text).") </script>";
     echo "<br>
