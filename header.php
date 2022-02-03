@@ -87,7 +87,7 @@
 
                 <form action="../Pages/SearchPage.php" method="get">
                     <div class="input-group">
-                        <input input type="text" name="search" class="form-control" placeholder="Search for products">
+                        <input input type="text" name="search" required value="<?php if(isset($_GET['search'])){echo $_GET['search']; } ?>" class="form-control" placeholder="Search for products">
                         <div class="input-group-append">
                             <span>
                                 <button class="btn btn-primary px-4" type="submit" style="height: 38px"><i class="fa fa-search"></i></button>
@@ -177,16 +177,16 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="../index.php" class="nav-item nav-link">Home</a>
-                            <a href="../Pages/shop.php" class="nav-item nav-link">Shop</a>
+                            <a href="../index.php" class="nav-item nav-link active">Home</a>
                             <a href="../Pages/returnProduct.php" class="nav-item nav-link">Return Product</a>
                             <!-- <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="cart.html" class="dropdown-item">Shopping Cart</a>
-                                    <a href="checkout.html" class="dropdown-item">Checkout</a>
+                                    <a href="Pages/cartPage.php" class="dropdown-item">Shopping Cart</a>
+                                    <a href="Pages/checkout.php" class="dropdown-item">Checkout</a>
                                 </div>
-                            </div>  -->
+                            </div> -->
+                            <a href="../Pages/payBalance.php" class="nav-item nav-link">My Balance</a>
                             <a href="../Pages/contact.php" class="nav-item nav-link">Contact</a>
                         </div>
                         <?php 

@@ -9,7 +9,8 @@ ManName VARCHAR(150) NOT NULL,
 ManLocation VARCHAR(200),
 ManLandline VARCHAR(11),  
 ManContactPerson VARCHAR(50) NOT NULL,    
-ManContactPersonPhone VARCHAR(11) NOT NULL,  
+ManContactPersonPhone VARCHAR(11) NOT NULL,
+ManImage VARCHAR(150),  
 CONSTRAINT Man_PK PRIMARY KEY (ManID)
 );
 
@@ -180,17 +181,17 @@ CONSTRAINT CALL_CENTER_ASS_FK3 FOREIGN KEY (CCRepID) REFERENCES CALL_CENTER_REP(
 
 
 ####################################################INSERT STATEMENTS####################################################
-INSERT INTO MANUFCATURER (ManName, ManLocation, ManLandline, ManContactPerson, ManContactPersonPhone)  VALUES
-('Samsung', '58 Abou Bakr El-Sedeek St., El-Nozha, Cairo Governorate', '02 00216580', 'Ahmed Salah Abdo', '01288892623'),
-('Redmi', '79 Mossadak, Ad Doqi, Dokki, Giza Governorate', '02 33361566', 'Hassam Ahmed Amin', '01158492623'),
-('Apple', '7 El-Thawra Square, Ad Doqi, Dokki, Giza Governorate', '02 33350375', 'Mahmoud Salem', '01212392623'),
-('Dell', 'Smart village KM 28 Cairo Alexandria desert road, Building 4, Street 1106 , Cairo', '02 35358000', 'Salem Ahmed', '0106595788'),
-('HP', 'xxxx xxxx', '02 xxx', 'Mostafa EL-Said', '01090855411'),
-('Lenovo', 'xxxx xxxx', '02 xxx', 'xxx', 'xxxx'),
-('Huawei', 'xxxx xxxx', '02 xxx', 'xxx', 'xxxx'),
-('Canon', 'xxxx xxxx', '02 xxx', 'xxx', 'xxxx'),
-('Sony', 'xxxx xxxx', '02 xxx', 'xxx', 'xxxx'),
-('KIA', 'xxxx xxxx', '02 xxx', 'xxx', 'xxxx');
+INSERT INTO MANUFCATURER (ManName, ManLocation, ManLandline, ManContactPerson, ManContactPersonPhone, ManImage)  VALUES
+('Samsung', '58 Abou Bakr El-Sedeek St., El-Nozha, Cairo Governorate', '02 00216580', 'Ahmed Salah Abdo', '01288892623', '../assets/manufacturers/1.png'),
+('Redmi', '79 Mossadak, Ad Doqi, Dokki, Giza Governorate', '02 33361566', 'Hassam Ahmed Amin', '01158492623','../assets/manufacturers/2.jpg'),
+('Apple', '7 El-Thawra Square, Ad Doqi, Dokki, Giza Governorate', '02 33350375', 'Mahmoud Salem', '01212392623','../assets/manufacturers/3.png'),
+('Dell', 'Smart village KM 28 Cairo Alexandria desert road, Building 4, Street 1106 , Cairo', '02 35358000', 'Salem Ahmed', '0106595788', null),
+('HP', 'xxxx xxxx', '02 xxx', 'Mostafa EL-Said', '01090855411', null),
+('Lenovo', 'xxxx xxxx', '02 xxx', 'xxx', 'xxxx', null),
+('Huawei', 'xxxx xxxx', '02 xxx', 'xxx', 'xxxx', null),
+('Canon', 'xxxx xxxx', '02 xxx', 'xxx', 'xxxx', null),
+('Sony', 'xxxx xxxx', '02 xxx', 'xxx', 'xxxx', null),
+('KIA', 'xxxx xxxx', '02 xxx', 'xxx', 'xxxx', null);
 
 INSERT INTO CATEGORIES (CatName) VALUES 
 ('Mobile Phones & Communication Products'),
