@@ -2,9 +2,9 @@
     <?php
     $id = $_GET['id'];
     
-    if(isset($_POST['data'])) {
+    if(isset($_POST['data']) && isset($_POST['status'])) {
         $result = $_POST['data'];
-        $message=addToCart($CusID, $id, $result);
+        $message=addToCart($CusID, $id, $result, $_POST['status']);
         $text = print_r($message, true);
         echo "<br>
         <div class=\"alert\">
@@ -84,6 +84,14 @@
                         </form>
                     </div>
                     <div class="d-flex align-items-center mb-4 pt-2">
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Product Status</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <button name="status" value="1" class="dropdown-item">New</button>
+                                <button name="status" value="0" class="dropdown-item">Referbished</button>
+                            </div>
+                        </div>
+                        <br>
                         <form method="post">
                             <input type="text" name="data" class="border-0 bg-secondary text-center" placeholder="Enter Quantity" style= "height:45px; width:200px;">
                             <button type="submit" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>                                                                

@@ -8,8 +8,8 @@ BEGIN
     IF Quant> @ProdQ THEN
     	SET Result="Sorry, but we don't have enough quantity in stock!";
     ELSE
-    	INSERT INTO cart (CusID, ProdID, Quantity) values (CustID, ProID, Quant)
-    	ON DUPLICATE KEY UPDATE CusID=CustID , ProdID=ProID , Quantity = Quant;
+    	INSERT INTO cart (CusID, ProdID, Quantity, prodStatus) values (CustID, ProID, Quant, Status)
+    	ON DUPLICATE KEY UPDATE CusID=CustID , ProdID=ProID , Quantity = Quant, prodStatus=Status;
         SET Result="Added to cart Successfully";
     END IF;
         RETURN Result;

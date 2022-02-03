@@ -6,11 +6,11 @@
         session_start(); 
     } 
 
-    function addToCart($CusID , $ProdID, $Quantity=1){
+    function addToCart($CusID , $ProdID, $Quantity=1, $status=1){
         // require MySQL Connection
         require ('connection.php');
                 
-        $query = " SELECT AddToCart ( $CusID, $ProdID , $Quantity ) ; ";
+        $query = " SELECT AddToCart ( $CusID, $ProdID , $Quantity, $status) ; ";
 
         $result=mysqli_query($conn, $query);
         $row = mysqli_fetch_row($result);
