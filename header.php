@@ -38,6 +38,7 @@
         include ('../functions.php');
         $product_cat = getData('categories');
         $CusID = isset($_SESSION['CusID'])? $_SESSION['CusID']: 0;
+        $subtotal=0;
     ?>
 
 </head>

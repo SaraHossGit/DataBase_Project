@@ -1,30 +1,60 @@
 <!DOCTYPE html>
-
-<html lang="en">
-
-
-<head>
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="testcss.css" rel="stylesheet">
-</head>
-
+<html>
 <body>
+<center>
+<h1>Products</h1>
 
-<div class="container d-flex justify-content-center">
-    <div class="card p-3">
-        <div class="d-flex flex-row justify-content-between text-align-center"> <img src="https://imgur.com/vvK2ARv.png"> <i class="fas fa-ellipsis-v"></i> </div>
-        <p class="text-dark">Elementery Business Account</p>
-        <div class="card-bottom pt-3 px-3 mb-2">
-            <div class="d-flex flex-row justify-content-between text-align-center">
-                <div class="d-flex flex-column"><span>Balance amount</span>
-                    <p>&euro; <span class="text-white">88,989</span></p>
-                </div> <button class="btn btn-secondary"><i class="fas fa-arrow-right text-white"></i></button>
-            </div>
-        </div>
-    </div>
-</div>
+<font>
 
+<form action="/action_page.php"> <b>
+
+  <label for="fname">Product name:</label><br> <b>
+  <input type="text" id="fname" name="fname" value="write here"><br> <br>
+  
+  <label for="fname">Category name:</label><br> <b>
+  <input type="text" id="fname" name="fname" value="write here"><br> <br>
+  
+  <label for="fname">Product image link:</label><br> <b>
+  <input type="text" id="fname" name="fname" value="write here"><br> <br>
+ 
+  <label for="fname">Manifacture name:</label><br> 
+  <input type="text" id="fname" name="fname" value="write here"><br> <br>
+  
+  <label for="fname">Technical spes:</label><br> 
+  <input type="text" id="fname" name="fname" value="write here"><br> <br>
+ 
+  <label for="fname">Price double:</label><br> 
+  <input type="text" id="fname" name="fname" value="write here"><br> <br>
+  
+  <label for="fname">Quantity Avalilable New INT:</label><br> 
+  <input type="text" id="fname" name="fname" value="write here"><br> <br>
+  
+  <label for="fname">Quantity Avalilable Ref INT:</label><br> 
+  <input type="text" id="fname" name="fname" value="write here"><br> <br>
+  
+  <label for="fname">Discount Double:</label><br> 
+  <input type="text" id="fname" name="fname" value="write here"><br> <br>
+
+
+<label for="the form above">Select if the product is new or inserted before: </label>
+<select id="=">
+  <option value="">--Make a choice--</option>
+  <option value="new">New Product</option>
+  <option value="old">Old product</option>
+</select>
+<p></p>
+ 
+ 
+<input type="submit" value="Submit"
+       style="background-color:#008080; 
+              border: solid 4px #000000;
+              height: 45px; 
+              font-size:25px; 
+              vertical-align:20px" />
+              
+
+</form> 
+ 
 </body>
 
 </html>
-

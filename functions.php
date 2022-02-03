@@ -16,4 +16,6 @@ require ('database/returnProd.php');
 
 require ('database/userBalance.php');
 
+require ('database/checkout.php');
+
 // returnProduct ( 1 , 'Samsung Galaxy 10' , 1 ) ;

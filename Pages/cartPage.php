@@ -26,15 +26,21 @@
                             <th>Products</th>
                             <th>Price</th>
                             <th>Quantity</th>
+                            <th>Product Status</th>
                             <th>Total</th>
                             <th>Remove</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle">
-                    <?php 
-                        $subtotal=0;
-                        $CusID = $_SESSION['CusID'];
+                    <?php
                         $cartItem = getSubData('cart', 'CusID', $CusID);
+                        if ($cartItem==null){
+                            echo "
+                            <tr>
+                                <td> cart is empty </td>
+                            </tr>";
+                        }
+                        else{
                         foreach ($cartItem as $item1){
                         $id = $item1['ProdID'];
                         $Quantity=$item1['Quantity'];
@@ -50,8 +56,10 @@
                                     
                                 </div>
                             </td>
+                            <td class="align-middle"> <?php echo $item1['prodStatus']=1? "New": "Referbished"  ?> </td>
                             <?php $total=$item['ProdPrice']*$Quantity;?>
                             <td class="align-middle"> $ <?php echo $total ?> </td>
+
                             <td class="align-middle">
                                 <?php
                                     if(isset($_POST['cart'])) {
@@ -66,10 +74,11 @@
                                     class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
                                 </form>
                             </td>
+                            
                         </tr>
                     <?php 
                     $subtotal+=$total;
-                    }} // closing foreach function ?>
+                    }}} // closing foreach function ?>
 
                     </tbody>
                 </table>
@@ -103,8 +112,8 @@
                             <h5 class="font-weight-bold">$ <?php echo $subtotal+10 ?></h5>
                         </div>
 
-                        <form action="checkout.php" method="post">
-                            <button type="submit" name="cart" value="cart" 
+                        <form action="checkoutPage.php" method="post">
+                            <button type="submit" 
                             class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
                         </form>
                     </div>
