@@ -14,4 +14,6 @@ require ('database/favourite.php');
 
 require ('database/returnProd.php');
 
+require ('database/userBalance.php');
+
 // returnProduct ( 1 , 'Samsung Galaxy 10' , 1 ) ;
