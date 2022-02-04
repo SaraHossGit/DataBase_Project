@@ -56,7 +56,7 @@
                                     
                                 </div>
                             </td>
-                            <td class="align-middle"> <?php echo $item1['prodStatus']=1? "New": "Referbished"  ?> </td>
+                            <td class="align-middle"> <?php echo $item1['prodStatus']? "New": "Referbished";  ?> </td>
                             <?php $total=$item['ProdPrice']*$Quantity;?>
                             <td class="align-middle"> $ <?php echo $total ?> </td>
 

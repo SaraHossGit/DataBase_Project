@@ -18,4 +18,6 @@ require ('database/userBalance.php');
 
 require ('database/checkout.php');
 
+require ('database/addCusShipping.php');
+
 // returnProduct ( 1 , 'Samsung Galaxy 10' , 1 ) ;

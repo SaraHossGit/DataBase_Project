@@ -84,17 +84,29 @@
                         </form>
                     </div>
                     <div class="d-flex align-items-center mb-4 pt-2">
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Product Status</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <button name="status" value="1" class="dropdown-item">New</button>
-                                <button name="status" value="0" class="dropdown-item">Referbished</button>
-                            </div>
-                        </div>
-                        <br>
                         <form method="post">
-                            <input type="text" name="data" class="border-0 bg-secondary text-center" placeholder="Enter Quantity" style= "height:45px; width:200px;">
-                            <button type="submit" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>                                                                
+                            <div >
+                                <p>Product Status</p>
+                                
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" class="custom-control-input" name="status" id="paypal" value=1>
+                                            <label class="custom-control-label" for="paypal">New</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" class="custom-control-input" name="status" id="directcheck" value=0>
+                                            <label class="custom-control-label" for="directcheck">Referbished</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            
+                                <input type="text" name="data" class="border-0 bg-secondary text-center" placeholder="Enter Quantity" style= "height:45px; width:200px;">
+                                <button type="submit" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>                                                                
                         </form>
 
                     </div>

@@ -1,9 +1,10 @@
 <?php include ("../header.php"); ?>
 <?php
-if(isset($_POST['checkout']) && isset($_POST['payment'])) {
+if(isset($_POST['checkout']) && isset($_POST['payment']) && isset($_POST['Address'])) {
 // if(isset($_POST['checkout'])) {    //&& isset($_POST['invComments'])
     // $message=invoiceIssuance($CusID, $_POST['$ProdName'], $_POST['invComments'],  $_POST['Quantity'], $_POST['method'], $_POST['ProdState']);
     $message=InvoiceIssuance( $CusID, null, $_POST['payment']);
+    addAddress($CusID , $address);
     
     if (!empty($message)){
         foreach ($message as $item){
@@ -22,6 +23,7 @@ if(isset($_POST['checkout']) && isset($_POST['payment'])) {
                 <p class=\"text-center font-weight-semi-bold\" style=\"font-size:20px\"> Your invoice has been created </p>
             </div>";
     }
+
 }
 ?>
         <!-- Page Header Start -->
@@ -38,6 +40,7 @@ if(isset($_POST['checkout']) && isset($_POST['payment'])) {
     <!-- Page Header End -->
 
     <!-- Checkout Start -->
+    <?php $data= getSubData('customer','CusID', $CusID); ?>
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
             <div class="col-lg-8">
@@ -45,117 +48,30 @@ if(isset($_POST['checkout']) && isset($_POST['payment'])) {
                     <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label>First Name</label>
-                            <input class="form-control" type="text" placeholder="John">
+                            <h6>First Name</h6>
+                            <p><?php echo $data[0]['CusFirstName']?></p>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Last Name</label>
-                            <input class="form-control" type="text" placeholder="Doe">
+                            <h6>Last Name</h6>
+                            <p><?php echo $data[0]['CusLastName']?></p>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>E-mail</label>
-                            <input class="form-control" type="text" placeholder="example@email.com">
+                            <h6>E-mail</h6>
+                            <p><?php echo $data[0]['CusEmailAddress']?></p>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Mobile No</label>
-                            <input class="form-control" type="text" placeholder="+123 456 789">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 1</label>
-                            <input class="form-control" type="text" placeholder="123 Street">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 2</label>
-                            <input class="form-control" type="text" placeholder="123 Street">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Country</label>
-                            <select class="custom-select">
-                                <option selected>United States</option>
-                                <option>Afghanistan</option>
-                                <option>Albania</option>
-                                <option>Algeria</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>City</label>
-                            <input class="form-control" type="text" placeholder="New York">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>State</label>
-                            <input class="form-control" type="text" placeholder="New York">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>ZIP Code</label>
-                            <input class="form-control" type="text" placeholder="123">
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="newaccount">
-                                <label class="custom-control-label" for="newaccount">Create an account</label>
-                            </div>
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="shipto">
-                                <label class="custom-control-label" for="shipto"  data-toggle="collapse" data-target="#shipping-address">Ship to different address</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="collapse mb-4" id="shipping-address">
-                    <h4 class="font-weight-semi-bold mb-4">Shipping Address</h4>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>First Name</label>
-                            <input class="form-control" type="text" placeholder="John">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Last Name</label>
-                            <input class="form-control" type="text" placeholder="Doe">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>E-mail</label>
-                            <input class="form-control" type="text" placeholder="example@email.com">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Mobile No</label>
-                            <input class="form-control" type="text" placeholder="+123 456 789">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 1</label>
-                            <input class="form-control" type="text" placeholder="123 Street">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 2</label>
-                            <input class="form-control" type="text" placeholder="123 Street">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Country</label>
-                            <select class="custom-select">
-                                <option selected>United States</option>
-                                <option>Afghanistan</option>
-                                <option>Albania</option>
-                                <option>Algeria</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>City</label>
-                            <input class="form-control" type="text" placeholder="New York">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>State</label>
-                            <input class="form-control" type="text" placeholder="New York">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>ZIP Code</label>
-                            <input class="form-control" type="text" placeholder="123">
+
+                        <form method="post">
+                            <label>Shipping Address</label>
+                            <input class="form-control" type="text" placeholder="Enter Shipping Address" name="address">
+                        </form>
+                            
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4">
-                    <form action="checkoutPage.php" method="post">
+                    <form method="post">
                     <div class="card border-secondary mb-5">
                             <div class="card-header bg-secondary border-0">
                                 <h4 class="font-weight-semi-bold m-0">Order Total</h4>

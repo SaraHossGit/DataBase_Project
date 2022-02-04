@@ -12,7 +12,8 @@
             $product= getSubData('product', 'ProdID', $item['ProdID']);
             $ProdName= $product[0]['ProdName'];
             $Quantity= $item['Quantity'];
-            $ProdState=$item['prodStatus'];
+            // $ProdState=$item['prodStatus'];
+            $ProdState=1;
             
             $query = " SELECT InvoiceIssuance( {$CusID}, '{$ProdName}', '{$invComments}', {$Quantity}, '{$method}', {$InvState}, {$ProdState}); ";
             $result =mysqli_query($conn, $query);
