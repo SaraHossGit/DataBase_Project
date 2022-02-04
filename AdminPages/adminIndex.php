@@ -40,7 +40,7 @@ else{
                             <td> Search customer by ID to check payments, balance and fees</td>
                         </tr>
                         <tr>
-                            <td> <a href="" class= "nav-link text-center" > Manage Products </a> </td>
+                            <td> <a href="addProduct.php" class= "nav-link text-center" > Manage Products </a> </td>
                             <td> Add, Delete, or Update product info</td>
                         </tr>
                         <tr>

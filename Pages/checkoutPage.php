@@ -1,10 +1,10 @@
 <?php include ("../header.php"); ?>
 <?php
-if(isset($_POST['checkout']) && isset($_POST['payment']) && isset($_POST['Address'])) {
+if(isset($_POST['checkout']) && isset($_POST['payment']) ) {
 // if(isset($_POST['checkout'])) {    //&& isset($_POST['invComments'])
     // $message=invoiceIssuance($CusID, $_POST['$ProdName'], $_POST['invComments'],  $_POST['Quantity'], $_POST['method'], $_POST['ProdState']);
     $message=InvoiceIssuance( $CusID, null, $_POST['payment']);
-    addAddress($CusID , $address);
+    // addAddress($CusID , $address);
     
     if (!empty($message)){
         foreach ($message as $item){
