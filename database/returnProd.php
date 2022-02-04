@@ -4,7 +4,7 @@
         // require MySQL Connection
         require ('connection.php');
 
-        $query = " SELECT ProdcutReturn ( $CusID, $invNumber , '$ProdName' , $Quantity ) ; ";
+        $query = " SELECT ProductReturn ( $CusID, $invNumber , '$ProdName' , $Quantity ) ; ";
 
         $result =mysqli_query($conn, $query);
         $row = mysqli_fetch_row($result);
