@@ -4,14 +4,20 @@
 require ('database/connection.php');
 
 // require Product Class
-require ('database/Product.php');
+require ('database/data.php');
 
+require ('database/search.php');
 
-// DBController object
-$db = new connection();
+require ('database/cart.php');
 
-// Product object
-$product = new Product($db);
-// print_r($product->getSubData('Manufcaturer', 'ManID', $product->getData()['ManID'] ) ['ManName']);
+require ('database/favourite.php');
 
+require ('database/returnProd.php');
 
+require ('database/userBalance.php');
+
+require ('database/checkout.php');
+
+require ('database/addCusShipping.php');
+
+// returnProduct ( 1 , 'Samsung Galaxy 10' , 1 ) ;

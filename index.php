@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php 
+    session_start();
+?>
+
 <head>
     <meta charset="utf-8">
     <title>EShopper - Bootstrap Shop Template</title>
@@ -22,12 +26,13 @@
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
     <?php
         // require functions.php file
         require ('functions.php');
-        $product_shuffle = $product->getData('categories');
+        $product_cat = getData('categories');
+        $CusID = isset($_SESSION['CusID'])? $_SESSION['CusID']: 0;
     ?>
 
 </head>
@@ -72,32 +77,50 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form action="">
+
+                <form action="Pages/SearchPage.php" method="get">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
+                        <input input type="text" name="search" required value="<?php if(isset($_GET['search'])){echo $_GET['search']; } ?>" class="form-control" placeholder="Search for products">
                         <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
+                            <span>
+                                <button class="btn btn-primary px-4" type="submit" style="height: 38px"><i class="fa fa-search"></i></button>
+                                
                             </span>
                         </div>
                     </div>
-                </form>
+               </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
+                <a href="Pages/favouritesPage.php" class="btn border">
                     <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge">
+                        <?php
+                            if ($CusID){
+                                $favCount = getSubData('favourits', 'CusID', $CusID);
+                                if ($favCount != null) {echo (count($favCount));}
+                                else {echo '0';}
+                            }
+                            else {echo '0';}
+                        ?>
+                    </span>
                 </a>
-                <a href="" class="btn border">
+                <a href="Pages/cartPage.php" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge">
+                        <?php
+                            if ($CusID){
+                                $cartCount = getSubData('cart', 'CusID', $CusID);
+                                if ($cartCount != null) {echo (count($cartCount));}
+                                else {echo '0';}
+                            }
+                            else {echo '0';}
+                        ?>
+                    </span>
                 </a>
             </div>
         </div>
     </div>
     <!-- Topbar End -->
-
-
 
     <!-- Navbar Start -->
     <div class="container-fluid mb-5">
@@ -111,17 +134,25 @@
                     <div class="navbar-nav w-100"  style="height: 450px">
 
                         <div class="navbar-nav w-100" >
-                            <?php foreach ($product_shuffle as $item) { ?>
+                            <?php foreach ($product_cat as $item) { 
+                                $subcat=getSubData('sub_categories', 'CatID', $item['CatID']);?>
                                 <!-- html code -->
                                 <div class="nav-item dropdown">
-                                    <a href="Pages/shop.php" class="nav-link" data-toggle="dropdown"><?php echo $item['CatName']?> <i class="fa fa-angle-down float-right mt-1"></i></a>
-                                    <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0" style="height: 50px; overflow-y: scroll;">
+                                    <a href="Pages/shop.php" class="nav-link" data-toggle="dropdown"> <?php echo $item['CatName']?> 
+                                        <?php if ($subcat!=null) { ?> 
+                                            <i class="fa fa-angle-down float-right mt-1"></i> 
+                                        <?php } ?> 
+                                    </a>
+                                    
+                                    <?php if ($subcat!=null) { ?>
+                                        <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0" style="height: 50px; overflow-y: scroll;">
+                                            <?php foreach ($subcat as $item2) { ?>
+                                                <!-- html code -->
+                                                <a href="Pages/shop.php?SubCatID=<?php echo $item2['SubCatID'] ?>" class="dropdown-item"> <?php echo $item2['SubCatName']?> </a>
+                                            <?php } // closing foreach function ?>
+                                        </div> 
+                                    <?php } // closing if statement ?>
 
-                                        <?php foreach ($product->getSubData('sub_categories', 'CatID', $item['CatID']) as $item2) { ?>
-                                            <!-- html code -->
-                                            <a href="Pages/shop.php" class="dropdown-item"> <?php echo $item2['SubCatName']?> </a>
-                                        <?php } // closing foreach function ?>
-                                    </div> 
                                 </div>
                             <?php } // closing foreach function ?>
                         </div>
@@ -140,21 +171,36 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="index.php" class="nav-item nav-link active">Home</a>
-                            <a href="Pages/shop.php" class="nav-item nav-link">Shop</a>
-                            <a href="Pages/detail.php" class="nav-item nav-link">Shop Detail</a>
-                            <div class="nav-item dropdown">
+                            <a href="Pages/returnProduct.php" class="nav-item nav-link">Return Product</a>
+                            <!-- <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="Pages/cart.php" class="dropdown-item">Shopping Cart</a>
+                                    <a href="Pages/cartPage.php" class="dropdown-item">Shopping Cart</a>
                                     <a href="Pages/checkout.php" class="dropdown-item">Checkout</a>
                                 </div>
-                            </div>
+                            </div> -->
+                            <a href="Pages/payBalance.php" class="nav-item nav-link">My Balance</a>
                             <a href="Pages/contact.php" class="nav-item nav-link">Contact</a>
                         </div>
-                        <div class="navbar-nav ml-auto py-0">
-                            <a href="" class="nav-item nav-link">Login</a>
-                            <a href="" class="nav-item nav-link">Register</a>
-                        </div>
+                        <?php 
+                        if (isset($_SESSION['CusID'])) {
+                            ?>
+                            <div class="navbar-nav ml-auto py-0">
+                                <a href="AdminPages/adminIndex.php" class="nav-item nav-link"> <?php echo "Welcome, "  . $_SESSION['First_name']; ?></a>
+                                <a href="login/logout.php" class="nav-item nav-link">logout</a>
+                            </div>
+                            <?php
+
+                        }
+                        else{
+                            ?>
+                            <div class="navbar-nav ml-auto py-0">
+                                <a href="login/index.php" class="nav-item nav-link">Login</a>
+                                <a href="login/register.php" class="nav-item nav-link">Register</a>
+                            </div>
+                            <?php
+                        }
+                        ?>
                     </div>
                 </nav>
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
@@ -165,7 +211,7 @@
                                 <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
                                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">All Your Essentials</h3>
-                                    <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
+                                    <a href="Pages/shop.php" class="btn btn-light py-2 px-3">Shop Now</a>
                                 </div>
                             </div>
                         </div>
@@ -175,7 +221,7 @@
                                 <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
                                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
-                                    <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
+                                    <a href="Pages/shop.php" class="btn btn-light py-2 px-3">Shop Now</a>
                                 </div>
                             </div>
                         </div>
@@ -228,69 +274,6 @@
     </div>
     <!-- Featured End -->
 
-
-    <!-- Categories Start -->
-    <div class="container-fluid pt-5">
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Products</p>
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="img/cat-1.jpg" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Men's dresses</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Products</p>
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="img/cat-2.jpg" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Women's dresses</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Products</p>
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="img/cat-3.jpg" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Baby's dresses</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Products</p>
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="img/cat-4.jpg" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Accerssories</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Products</p>
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="img/cat-5.jpg" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Bags</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Products</p>
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="img/cat-6.jpg" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Shoes</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Categories End -->
-
-
     <!-- Offer Start -->
     <div class="container-fluid offer pt-5">
         <div class="row px-xl-5">
@@ -318,154 +301,6 @@
     </div>
     <!-- Offer End -->
 
-
-    <!-- Products Start -->
-    <div class="container-fluid pt-5">
-        <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Trandy Products</span></h2>
-        </div>
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-2.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-3.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-4.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-5.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-6.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-7.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-8.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Products End -->
-
-
     <!-- Subscribe Start -->
     <div class="container-fluid bg-secondary my-5">
         <div class="row justify-content-md-center py-5 px-xl-5">
@@ -487,195 +322,43 @@
     </div>
     <!-- Subscribe End -->
 
-
-    <!-- Products Start -->
-    <div class="container-fluid pt-5">
-        <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Just Arrived</span></h2>
-        </div>
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-2.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-3.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-4.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-5.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-6.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-7.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-8.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Products End -->
-
-
     <!-- Vendor Start -->
     <div class="container-fluid py-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Vendors</span></h2>
+        </div>
         <div class="row px-xl-5">
             <div class="col">
-                <div class="owl-carousel vendor-carousel">
-                    <div class="vendor-item border p-4">
-                        <img src="img/vendor-1.jpg" alt="">
+                    <style>
+                        .grid-container {
+                        display: grid;
+                        grid-template-columns: auto auto auto auto;
+                        padding: 10px;
+                        }
+                        .grid-item {
+                        padding: 20px;
+                        font-size: 30px;
+                        text-align: center;
+                        }
+                    </style>
+
+                    <div class="grid-container">
+                    <?php 
+                        $man=getData('manufcaturer');
+                        foreach ($man as $item) { ?>
+                            <div class="vendor-item p-4 grid-item"><img style="max-height:100px;" src="<?php echo $item['ManImage']; ?>" alt="noImage"></div>
+                    <?php } ?>
                     </div>
-                    <div class="vendor-item border p-4">
-                        <img src="img/vendor-2.jpg" alt="">
-                    </div>
-                    <div class="vendor-item border p-4">
-                        <img src="img/vendor-3.jpg" alt="">
-                    </div>
-                    <div class="vendor-item border p-4">
-                        <img src="img/vendor-4.jpg" alt="">
-                    </div>
-                    <div class="vendor-item border p-4">
-                        <img src="img/vendor-5.jpg" alt="">
-                    </div>
-                    <div class="vendor-item border p-4">
-                        <img src="img/vendor-6.jpg" alt="">
-                    </div>
-                    <div class="vendor-item border p-4">
-                        <img src="img/vendor-7.jpg" alt="">
-                    </div>
-                    <div class="vendor-item border p-4">
-                        <img src="img/vendor-8.jpg" alt="">
-                    </div>
-                </div>
             </div>
         </div>
     </div>
     <!-- Vendor End -->
 
-
     <!-- Footer Start -->
     <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
         <div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-                <a href="" class="text-decoration-none">
+                <a href="../index.php" class="text-decoration-none">
                     <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper</h1>
                 </a>
                 <p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna, ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
@@ -688,24 +371,15 @@
                     <div class="col-md-4 mb-5">
                         <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
                         <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                            <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                            <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                            <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                            <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                            <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-dark mb-2" href="Pages/shop.php"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                            <a class="text-dark mb-2" href="Pages/returnProduct.php"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+                            <a class="text-dark mb-2" href="Pages/cartPage.php"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                            <a class="text-dark mb-2" href="Pages/checkout.php"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+                            <a class="text-dark" href="Pages/contact.php"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
                         </div>
                     </div>
                     <div class="col-md-4 mb-5">
-                        <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                            <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                            <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                            <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                            <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
-                        </div>
                     </div>
                     <div class="col-md-4 mb-5">
                         <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
@@ -748,16 +422,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
-
-
 
     <!-- Contact Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
-</body>
-
-</html>
+    <script src="main.js"></script>
